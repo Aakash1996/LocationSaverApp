@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Location Saver App</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="Latitude_TextView">Latitude</string>
+    <string name="Longitude_TextView">Longitude</string>
+    <string name="time_stamp">Last Updated</string>
+    <string name="timestamp_time">----</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_map">Map Activity</string>
+
+</resources>
