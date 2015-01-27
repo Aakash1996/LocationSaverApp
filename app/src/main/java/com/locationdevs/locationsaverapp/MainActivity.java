@@ -362,9 +362,9 @@ public class MainActivity extends ActionBarActivity implements
         FileOutputStream[] writer = new FileOutputStream[1];
         TextView errorview = (TextView) findViewById(R.id.errorVieww);
         try {
-            writer[0] = openFileOutput("SavedData", Context.MODE_APPEND);
+            writer[0] = openFileOutput("SavedData.txt", Context.MODE_APPEND);
             writer[0].write(String.valueOf(mCurrentLocation.getLatitude()).getBytes());
-            writer[0].write("\t\t\t\t\t\t\t\t\t\t\t\t".getBytes());
+            writer[0].write(" ".getBytes());
             writer[0].write(String.valueOf(mCurrentLocation.getLongitude()).getBytes());
             writer[0].write("\n".getBytes());
             writer[0].close();
