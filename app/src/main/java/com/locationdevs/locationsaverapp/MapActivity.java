@@ -3,11 +3,14 @@ package com.locationdevs.locationsaverapp;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -31,10 +34,23 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap map) {
         AddMarkers(map);
+        map.setLocationSource(new LocationSource() {
+            @Override
+            public void activate(OnLocationChangedListener onLocationChangedListener) {
+
+            }
+
+            @Override
+            public void deactivate() {
+
+            }
+        });
+        map.getMyLocation();
     }
 
     void AddMarkers(GoogleMap map){
         InputStream inputStream = null;
+        double latold = -1,longold = -1;
         try {
             inputStream = openFileInput("SavedData.txt");
         } catch (FileNotFoundException e) {
@@ -54,6 +70,11 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
                     latitude = Double.parseDouble(recieveString[0]);
                     longitude = Double.parseDouble(recieveString[1]);
                     map.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).title(title));
+                    if(latold != -1) {
+                        map.addPolyline(new PolylineOptions().add(new LatLng(latold, longold), new LatLng(latitude,longitude)));
+                    }
+                    latold = latitude;
+                    longold = longitude;
                 } catch (Exception e) {
                     e.printStackTrace();
                     break;
@@ -64,6 +85,10 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            LatLng lastPos = new LatLng(latitude,longitude);
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPos,13));
+            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         }
     }
 }

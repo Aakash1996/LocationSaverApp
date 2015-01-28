@@ -202,6 +202,14 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
 
+    public void deleteFileButtonHandler(View view) {
+        try {
+            deleteFile("SavedData.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void changeActivity(View view){
         stopLocationUpdates();
         Intent intent = new Intent(this, MapActivity.class);
@@ -360,7 +368,7 @@ public class MainActivity extends ActionBarActivity implements
 
     void save() {
         FileOutputStream[] writer = new FileOutputStream[1];
-        TextView errorview = (TextView) findViewById(R.id.errorVieww);
+        TextView errorview = (TextView) findViewById(R.id.errorView);
         try {
             writer[0] = openFileOutput("SavedData.txt", Context.MODE_APPEND);
             writer[0].write(String.valueOf(mCurrentLocation.getLatitude()).getBytes());
